@@ -1,16 +1,40 @@
-function handleSubmit(event) {
-    event.preventDefault()
+//DOM IDs
+const INPUT = document.querySelector('#input')
+const RESULT = document.querySelector('#results')
 
-    // check what text was put into the form field
-    let formText = document.getElementById('name').value
-    checkForName(formText)
+const updateUI = (data) => {
+    for (const div of RESULT.children) {
+      const id = div.id
+      div.firstElementChild.innerText = id
+      div.lastElementChild.innerText = data[id]
+    }
+  }
 
-    console.log("::: Form Submitted :::")
-    fetch('http://localhost:8080/test')
-    .then(res => res.json())
-    .then(function(res) {
-        document.getElementById('results').innerHTML = res.message
-    })
+const handleFormSubmit =async (validateURL) => {
+    //Input Field value
+    const articleURL = INPUT.value
+    try {
+        if(!validateURL(articleURL)){
+            alert('invalid URL')
+            throw new Error('invalid URL')
+        }
+        const res = await fetch('http://localhost:8080/add-url',{
+            method: 'POST',
+            mode: 'cors',
+            credentials: 'same-origin',
+            headers:{
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({articleURL})
+        })
+        const data = await res.json()
+        // console.log(data)
+        updateUI(data)
+        // return await res.json()
+    } catch (err) {
+        console.log(err)
+    }
 }
 
-export { handleSubmit }
+
+export { handleFormSubmit }

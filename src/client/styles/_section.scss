@@ -1,0 +1,14 @@
+section {
+  div:not(#results) {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 40px;
+    span {
+      text-transform: capitalize;
+    }
+    p {
+      text-transform: lowercase;
+      margin-right: 2em;
+    }
+  }
+}

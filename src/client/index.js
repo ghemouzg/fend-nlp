@@ -1,7 +1,15 @@
-import { checkForName } from './js/nameChecker'
-import { handleSubmit } from './js/formHandler'
+import { handleFormSubmit } from './js/formHandler'
+import { validateURL } from './js/validateURL'
+import './styles/style.scss'
 
-console.log(checkForName);
-
-alert("I EXIST")
-console.log("CHANGE!!");
+window.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('form')
+    form.addEventListener('submit', (e) => {
+        e.preventDefault()
+         handleFormSubmit(validateURL)
+    })
+});
+export {
+    handleFormSubmit,
+    validateURL
+}
